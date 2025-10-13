@@ -68,16 +68,15 @@ export const Chatbot = ({
     setIsTyping(true);
 
     try {
-      // n8n webhook format - send chatMessage, action, and sessionId
+      // n8n chat webhook format
       const response = await fetch(webhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          action: "sendMessage",
-          chatMessage: text,
           sessionId: currentSessionId,
+          chatInput: text,
         }),
       });
 
@@ -87,8 +86,8 @@ export const Chatbot = ({
 
       const data = await response.json();
       
-      // n8n typically returns { output: "response text" } or { text: "response text" }
-      const botReply = data.output || data.text || data.reply || data.message || "I received your message!";
+      // n8n chat webhook response format
+      const botReply = data.output || data.response || data.text || data.message || "I received your message!";
       
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
