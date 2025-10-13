@@ -16,16 +16,19 @@ interface Message {
 interface ChatbotProps {
   webhookUrl?: string;
   greeting?: string;
+  sessionId?: string;
 }
 
 export const Chatbot = ({
-  webhookUrl = "https://ai.nagpurnmc.in/webhook",
+  webhookUrl = "https://ai.nagpurnmc.in/webhook/15cffe6a-0d7a-4da5-82a4-4242957dc2e1/chat",
   greeting = "Welcome to Nagpur Municipal Corporation 👋\nHow can I help you today?",
+  sessionId,
 }: ChatbotProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [currentSessionId] = useState(sessionId || `session-${Date.now()}`);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -65,22 +68,31 @@ export const Chatbot = ({
     setIsTyping(true);
 
     try {
+      // n8n webhook format - send chatMessage, action, and sessionId
       const response = await fetch(webhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: text }),
+        body: JSON.stringify({
+          action: "sendMessage",
+          chatMessage: text,
+          sessionId: currentSessionId,
+        }),
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
+      
+      // n8n typically returns { output: "response text" } or { text: "response text" }
+      const botReply = data.output || data.text || data.reply || data.message || "I received your message!";
+      
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: data.reply || "I received your message!",
+        text: botReply,
         isUser: false,
         timestamp: new Date(),
       };
