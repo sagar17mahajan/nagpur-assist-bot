@@ -23,9 +23,9 @@ export const ChatWindow = ({ isOpen, onClose, children }: ChatWindowProps) => {
       <div className="chat-header flex items-center justify-between px-5 py-4">
         <div className="flex-1">
           <h2 className="text-lg font-semibold flex items-center gap-2">
-            💬 Ask NMC Assistant
+            💬 NMC AI मित्र !
           </h2>
-          <p className="text-xs opacity-90 mt-0.5">Powered by AI</p>
+          <p className="text-xs opacity-90 mt-0.5">Powered by MARS</p>
         </div>
         <button
           onClick={onClose}
