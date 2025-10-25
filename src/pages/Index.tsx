@@ -14,6 +14,50 @@ const Index = () => {
             </p>
           </div>
 
+          {/* Quick Links Section */}
+          <nav className="flex flex-wrap justify-center gap-3 mt-8" aria-label="Quick service links">
+            <a 
+              href="https://nagpurnmc.in/property-tax" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="px-6 py-2.5 bg-primary/10 hover:bg-primary/20 text-primary rounded-full font-medium transition-colors border border-primary/20"
+            >
+              Property Tax
+            </a>
+            <a 
+              href="https://nagpurnmc.in/water-supply" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="px-6 py-2.5 bg-primary/10 hover:bg-primary/20 text-primary rounded-full font-medium transition-colors border border-primary/20"
+            >
+              Water Supply
+            </a>
+            <a 
+              href="https://nagpurnmc.in/grievance" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="px-6 py-2.5 bg-primary/10 hover:bg-primary/20 text-primary rounded-full font-medium transition-colors border border-primary/20"
+            >
+              Grievance
+            </a>
+            <a 
+              href="https://wa.me/your-whatsapp-number" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="px-6 py-2.5 bg-primary/10 hover:bg-primary/20 text-primary rounded-full font-medium transition-colors border border-primary/20"
+            >
+              WhatsApp Chatbot
+            </a>
+            <a 
+              href="https://nagpurnmc.in/right-to-services" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="px-6 py-2.5 bg-primary/10 hover:bg-primary/20 text-primary rounded-full font-medium transition-colors border border-primary/20"
+            >
+              Right to Services
+            </a>
+          </nav>
+
           <div className="grid md:grid-cols-3 gap-6 mt-12">
             <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
               <div className="text-4xl mb-3">💧</div>
