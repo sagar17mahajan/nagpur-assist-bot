@@ -10,7 +10,7 @@ interface ChatWindowProps {
 export const ChatWindow = ({ isOpen, onClose, children }: ChatWindowProps) => {
   return (
     <div
-      className={`fixed bottom-6 right-6 z-50 flex h-[600px] w-[400px] flex-col overflow-hidden rounded-2xl transition-all duration-300 ${
+      className={`fixed bottom-6 right-6 z-50 flex h-[600px] w-[400px] flex-col overflow-hidden rounded-2xl shadow-2xl transition-all duration-300 chat-window ${
         isOpen
           ? "scale-100 opacity-100"
           : "pointer-events-none scale-95 opacity-0"
@@ -20,7 +20,7 @@ export const ChatWindow = ({ isOpen, onClose, children }: ChatWindowProps) => {
         maxWidth: "calc(100vw - 48px)",
       }}
     >
-      <div className="flex items-center justify-between px-5 py-4 bg-transparent">
+      <div className="chat-header flex items-center justify-between px-5 py-4">
         <div className="flex-1">
           <h2 className="text-lg font-semibold flex items-center gap-2">
             💬 NMC AI मित्र !

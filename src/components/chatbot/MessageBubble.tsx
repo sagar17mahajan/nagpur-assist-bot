@@ -5,11 +5,19 @@ interface MessageBubbleProps {
 }
 
 const linkifyText = (text: string) => {
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
-  const parts = text.split(urlRegex);
+  // Match URLs and phone numbers, excluding trailing punctuation
+  const urlRegex = /(https?:\/\/[^\s]+?)(?=[.,;:!?)\]}\s]|$)/g;
+  const phoneRegex = /(\+?\d{1,4}[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9})/g;
+  
+  // Combined regex to match both URLs and phone numbers
+  const combinedRegex = new RegExp(`(${urlRegex.source})|(${phoneRegex.source})`, 'g');
+  const parts = text.split(combinedRegex).filter(Boolean);
   
   return parts.map((part, index) => {
-    if (part.match(urlRegex)) {
+    if (!part) return null;
+    
+    // Check if it's a URL
+    if (part.match(/^https?:\/\//)) {
       return (
         <a
           key={index}
@@ -22,6 +30,20 @@ const linkifyText = (text: string) => {
         </a>
       );
     }
+    
+    // Check if it's a phone number
+    if (part.match(/^\+?\d/)) {
+      return (
+        <a
+          key={index}
+          href={`tel:${part.replace(/[-.\s]/g, '')}`}
+          className="underline hover:opacity-80 transition-opacity"
+        >
+          {part}
+        </a>
+      );
+    }
+    
     return part;
   });
 };
