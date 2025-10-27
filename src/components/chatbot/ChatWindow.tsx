@@ -8,13 +8,11 @@ interface ChatWindowProps {
 }
 
 export const ChatWindow = ({ isOpen, onClose, children }: ChatWindowProps) => {
+  if (!isOpen) return null;
+  
   return (
     <div
-      className={`fixed bottom-6 right-6 z-50 flex h-[600px] w-[400px] flex-col overflow-hidden rounded-2xl shadow-2xl transition-all duration-300 chat-window ${
-        isOpen
-          ? "scale-100 opacity-100"
-          : "pointer-events-none scale-95 opacity-0"
-      }`}
+      className="fixed bottom-6 right-6 z-50 flex h-[600px] w-[400px] flex-col overflow-hidden rounded-2xl shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-300 chat-window"
       style={{
         maxHeight: "calc(100vh - 100px)",
         maxWidth: "calc(100vw - 48px)",
