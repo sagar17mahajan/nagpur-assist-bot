@@ -5,47 +5,62 @@ interface MessageBubbleProps {
 }
 
 const linkifyText = (text: string) => {
-  // Match URLs and phone numbers, excluding trailing punctuation
-  const urlRegex = /(https?:\/\/[^\s]+?)(?=[.,;:!?)\]}\s]|$)/g;
+  // Match markdown-style links [text](URL)
+  const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
   const phoneRegex = /(\+?\d{1,4}[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9})/g;
   
-  // Combined regex to match both URLs and phone numbers
-  const combinedRegex = new RegExp(`(${urlRegex.source})|(${phoneRegex.source})`, 'g');
-  const parts = text.split(combinedRegex).filter(Boolean);
+  const parts: (string | JSX.Element)[] = [];
+  let lastIndex = 0;
+  let match;
   
-  return parts.map((part, index) => {
-    if (!part) return null;
-    
-    // Check if it's a URL
-    if (part.match(/^https?:\/\//)) {
-      return (
-        <a
-          key={index}
-          href={part}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:opacity-80 transition-opacity"
-        >
-          {part}
-        </a>
-      );
+  // First, process markdown links
+  while ((match = markdownLinkRegex.exec(text)) !== null) {
+    const beforeMatch = text.slice(lastIndex, match.index);
+    if (beforeMatch) {
+      parts.push(beforeMatch);
     }
     
-    // Check if it's a phone number
-    if (part.match(/^\+?\d/)) {
-      return (
-        <a
-          key={index}
-          href={`tel:${part.replace(/[-.\s]/g, '')}`}
-          className="underline hover:opacity-80 transition-opacity"
-        >
-          {part}
-        </a>
-      );
-    }
+    const linkText = match[1];
+    const url = match[2];
     
-    return part;
-  });
+    parts.push(
+      <a
+        key={`link-${match.index}`}
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline hover:opacity-80 transition-opacity"
+      >
+        {linkText}
+      </a>
+    );
+    
+    lastIndex = match.index + match[0].length;
+  }
+  
+  // Add remaining text after last match
+  const remainingText = text.slice(lastIndex);
+  if (remainingText) {
+    // Process phone numbers in remaining text
+    const phoneParts = remainingText.split(phoneRegex).filter(Boolean);
+    phoneParts.forEach((part, index) => {
+      if (part.match(/^\+?\d/)) {
+        parts.push(
+          <a
+            key={`phone-${lastIndex}-${index}`}
+            href={`tel:${part.replace(/[-.\s]/g, '')}`}
+            className="underline hover:opacity-80 transition-opacity"
+          >
+            {part}
+          </a>
+        );
+      } else {
+        parts.push(part);
+      }
+    });
+  }
+  
+  return parts;
 };
 
 export const MessageBubble = ({ message, isUser, timestamp }: MessageBubbleProps) => {
