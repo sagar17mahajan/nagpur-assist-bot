@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NMC Chatbot - Embed Instructions</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1 { color: #2563eb; }
+    h2 { color: #1e40af; margin-top: 30px; }
+    pre {
+      background: #f3f4f6;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      border-left: 4px solid #2563eb;
+    }
+    code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+    .method {
+      background: #f9fafb;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+    }
+    .attribute {
+      background: #fef3c7;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <h1>🤖 NMC AI Chatbot - Integration Guide</h1>
+  <p>Embed the NMC AI chatbot on your website or mobile app using one of the methods below.</p>
+
+  <div class="method">
+    <h2>Method 1: Script Tag (Recommended)</h2>
+    <p>Add this single line before the closing <code>&lt;/body&gt;</code> tag:</p>
+    <pre><code>&lt;script src="https://d3353be7-8651-4efc-8221-95fa234a15ea.lovableproject.com/embed.js"&gt;&lt;/script&gt;</code></pre>
+    
+    <h3>Custom Configuration</h3>
+    <p>You can customize the chatbot using data attributes:</p>
+    <pre><code>&lt;script 
+  src="https://d3353be7-8651-4efc-8221-95fa234a15ea.lovableproject.com/embed.js"
+  data-webhook-url="YOUR_WEBHOOK_URL"
+  data-greeting="Your custom greeting message"
+  data-session-id="unique-session-id"
+&gt;&lt;/script&gt;</code></pre>
+    
+    <h3>Available Attributes:</h3>
+    <ul>
+      <li><span class="attribute">data-webhook-url</span> - Your n8n webhook URL</li>
+      <li><span class="attribute">data-greeting</span> - Custom greeting message</li>
+      <li><span class="attribute">data-session-id</span> - Unique session identifier</li>
+    </ul>
+  </div>
+
+  <div class="method">
+    <h2>Method 2: iFrame Embed</h2>
+    <p>Embed the chatbot using an iframe:</p>
+    <pre><code>&lt;iframe 
+  src="https://d3353be7-8651-4efc-8221-95fa234a15ea.lovableproject.com/chatbot-embed"
+  style="position: fixed; bottom: 0; right: 0; width: 100%; height: 100%; border: none; z-index: 9999;"
+  allow="clipboard-read; clipboard-write"
+&gt;&lt;/iframe&gt;</code></pre>
+    
+    <h3>Custom Configuration via URL Parameters</h3>
+    <pre><code>&lt;iframe 
+  src="https://d3353be7-8651-4efc-8221-95fa234a15ea.lovableproject.com/chatbot-embed?webhookUrl=YOUR_WEBHOOK&greeting=Hello!"
+  style="position: fixed; bottom: 0; right: 0; width: 100%; height: 100%; border: none; z-index: 9999;"
+&gt;&lt;/iframe&gt;</code></pre>
+    
+    <h3>URL Parameters:</h3>
+    <ul>
+      <li><code>webhookUrl</code> - Your n8n webhook URL</li>
+      <li><code>greeting</code> - Custom greeting message</li>
+      <li><code>sessionId</code> - Unique session identifier</li>
+    </ul>
+  </div>
+
+  <div class="method">
+    <h2>Method 3: Mobile App Integration</h2>
+    <p>For React Native, Flutter, or native mobile apps, use a WebView:</p>
+    
+    <h3>React Native:</h3>
+    <pre><code>import { WebView } from 'react-native-webview';
+
+&lt;WebView 
+  source={{ uri: 'https://d3353be7-8651-4efc-8221-95fa234a15ea.lovableproject.com/chatbot-embed' }}
+  style={{ flex: 1 }}
+/&gt;</code></pre>
+
+    <h3>Flutter:</h3>
+    <pre><code>import 'package:webview_flutter/webview_flutter.dart';
+
+WebView(
+  initialUrl: 'https://d3353be7-8651-4efc-8221-95fa234a15ea.lovableproject.com/chatbot-embed',
+  javascriptMode: JavascriptMode.unrestricted,
+)</code></pre>
+  </div>
+
+  <div class="method">
+    <h2>Testing</h2>
+    <p>Test the chatbot embed on this page:</p>
+    <a href="https://d3353be7-8651-4efc-8221-95fa234a15ea.lovableproject.com/chatbot-embed" 
+       target="_blank"
+       style="display: inline-block; background: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px;">
+      Open Chatbot Demo
+    </a>
+  </div>
+
+  <footer style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280;">
+    <p>Powered by MARS | Nagpur Municipal Corporation</p>
+  </footer>
+</body>
+</html>
