@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { MessageBubble } from "./MessageBubble";
 import { TypingIndicator } from "./TypingIndicator";
 import { ChatInput } from "./ChatInput";
-import { Moon, Sun, X } from "lucide-react";
+import { Moon, Sun, X, Citrus } from "lucide-react";
 
 interface Message {
   id: string;
@@ -118,7 +118,11 @@ export const Chatbot = ({
       <div className="chat-header flex items-center justify-between px-5 py-4">
         <div className="flex-1">
           <h2 className="text-lg font-semibold flex items-center gap-2">
-            💬 NMC AI मित्र !
+            <div className="relative">
+              <Citrus className="h-6 w-6 text-orange-500" fill="currentColor" />
+              <Citrus className="h-6 w-6 text-green-500 absolute top-0 left-0 animate-spin" strokeWidth={3} fill="none" style={{ animationDuration: '3s' }} />
+            </div>
+            NMC AI मित्र !
           </h2>
           <p className="text-xs opacity-90 mt-0.5">Powered by MARS</p>
         </div>
