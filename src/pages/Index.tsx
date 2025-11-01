@@ -1,16 +1,19 @@
-import { Chatbot } from "@/components/chatbot/Chatbot";
-
 const Index = () => {
   return (
-    <>
-      {/* Your homepage content goes here */}
-      <div className="min-h-screen">
-        {/* Add your homepage content in this div */}
+    <div className="min-h-screen flex items-center justify-center p-8">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold mb-4">NMC AI Chatbot</h1>
+        <p className="text-muted-foreground mb-6">
+          Embed this chatbot on your website using the iframe URL
+        </p>
+        <a 
+          href="/chatbot-embed" 
+          className="text-primary hover:underline"
+        >
+          View Chatbot Embed →
+        </a>
       </div>
-      
-      {/* Chatbot as floating overlay */}
-      <Chatbot />
-    </>
+    </div>
   );
 };
 

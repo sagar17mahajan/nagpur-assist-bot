@@ -1,10 +1,8 @@
 import { useState, useRef, useEffect } from "react";
-import { ChatButton } from "./ChatButton";
-import { ChatWindow } from "./ChatWindow";
 import { MessageBubble } from "./MessageBubble";
 import { TypingIndicator } from "./TypingIndicator";
 import { ChatInput } from "./ChatInput";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, X } from "lucide-react";
 
 interface Message {
   id: string;
@@ -24,7 +22,6 @@ export const Chatbot = ({
   greeting = "Welcome to Nagpur Municipal Corporation 👋\nHow can I help you today?",
   sessionId,
 }: ChatbotProps) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -40,7 +37,7 @@ export const Chatbot = ({
   }, [isDarkMode]);
 
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
+    if (messages.length === 0) {
       setMessages([
         {
           id: "greeting",
@@ -50,7 +47,7 @@ export const Chatbot = ({
         },
       ]);
     }
-  }, [isOpen, greeting, messages.length]);
+  }, [greeting, messages.length]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -117,41 +114,46 @@ export const Chatbot = ({
   };
 
   return (
-    <>
-      <ChatButton onClick={() => setIsOpen(true)} isOpen={isOpen} />
-      <ChatWindow isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <div className="flex-1 overflow-y-auto p-4 space-y-2">
-          {messages.map((msg) => (
-            <MessageBubble
-              key={msg.id}
-              message={msg.text}
-              isUser={msg.isUser}
-              timestamp={msg.timestamp}
-            />
-          ))}
-          {isTyping && <TypingIndicator />}
-          <div ref={messagesEndRef} />
+    <div className="flex h-full w-full flex-col overflow-hidden chat-window">
+      <div className="chat-header flex items-center justify-between px-5 py-4">
+        <div className="flex-1">
+          <h2 className="text-lg font-semibold flex items-center gap-2">
+            💬 NMC AI मित्र !
+          </h2>
+          <p className="text-xs opacity-90 mt-0.5">Powered by MARS</p>
         </div>
-        <div className="px-4 pb-2 flex justify-between items-center">
-          <button
-            onClick={() => setIsDarkMode(!isDarkMode)}
-            className="text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5"
-          >
-            {isDarkMode ? (
-              <>
-                <Sun className="h-3.5 w-3.5" />
-                <span>Light mode</span>
-              </>
-            ) : (
-              <>
-                <Moon className="h-3.5 w-3.5" />
-                <span>Dark mode</span>
-              </>
-            )}
-          </button>
-        </div>
-        <ChatInput onSend={sendMessage} disabled={isTyping} />
-      </ChatWindow>
-    </>
+      </div>
+      <div className="flex-1 overflow-y-auto p-4 space-y-2">
+        {messages.map((msg) => (
+          <MessageBubble
+            key={msg.id}
+            message={msg.text}
+            isUser={msg.isUser}
+            timestamp={msg.timestamp}
+          />
+        ))}
+        {isTyping && <TypingIndicator />}
+        <div ref={messagesEndRef} />
+      </div>
+      <div className="px-4 pb-2 flex justify-between items-center">
+        <button
+          onClick={() => setIsDarkMode(!isDarkMode)}
+          className="text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5"
+        >
+          {isDarkMode ? (
+            <>
+              <Sun className="h-3.5 w-3.5" />
+              <span>Light mode</span>
+            </>
+          ) : (
+            <>
+              <Moon className="h-3.5 w-3.5" />
+              <span>Dark mode</span>
+            </>
+          )}
+        </button>
+      </div>
+      <ChatInput onSend={sendMessage} disabled={isTyping} />
+    </div>
   );
 };
